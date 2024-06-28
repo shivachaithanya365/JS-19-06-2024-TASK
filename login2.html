@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN-PAGE 2</title>
+    <style>
+        h1,
+        h3,
+        form {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>LOGIN HERE</h1>
+
+    <form>
+        <input type="text" id="username"> <br><br><br>
+        <input type="password" id="password"> <br><br><br>
+        <input type="submit" value="Login">
+    </form>
+
+    <h3>Not registered ? <a href="./register.html" target="_blank">Register here</a></h3>
+
+</body>
+<script>
+    let form = document.forms[0];
+
+    form.addEventListener("submit", (event) => {
+
+        event.preventDefault();
+
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+
+        if (username == "" || username.length < 5 || username.length > 10) {
+            alert("Username length should be between 5 - 10 characters");
+            return;
+        }
+
+        if (password == "" || password.length < 5 || password.length > 10) {
+            alert("password length should be between 5 - 10 characters");
+            return;
+        }
+
+        if (username == password) {
+            alert("username and password shouldn't be same");
+            return;
+        }
+
+        let registeredUser = JSON.parse(localStorage.getItem("usersData"));
+
+        if (!registeredUser || registeredUser.length === 0) {
+            alert("No users registered. Please register first.");
+            window.location.href = "./register2.html";
+            return;
+        }
+
+        let foundUser = registeredUser.find(user => user.user == username);
+
+        if (!foundUser) {
+            alert("Username does not exist! Please register.");
+            window.location.href = "./register2.html";
+            return;
+        }
+
+        if (password !== foundUser.pass) {
+            alert("Password does not match");
+            return;
+        }
+
+        alert("Login successful");
+        form.reset();
+
+        window.location.assign("https://shivachaithanya365.github.io/HTML-CSS--PROJECT/");
+
+    });
+
+
+</script>
+
+</html>

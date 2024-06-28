@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN-PAGE</title>
+    <style>
+        h1,
+        h3,
+        form {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>LOGIN HERE</h1>
+
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Username"> <br><br><br>
+        <input type="password" id="password" placeholder="Password"> <br><br><br>
+        <input type="submit" value="Login">
+    </form>
+
+    <h3>Not registered ? <a href="./register.html" target="_blank">Register here</a></h3>
+
+    <script>
+        const form = document.getElementById("loginForm");
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            if (username === "" || username.length < 5 || username.length > 10) {
+                alert("Username length should be between 5 - 10 characters");
+                return;
+            }
+
+            if (password === "" || password.length < 5 || password.length > 10) {
+                alert("Password length should be between 5 - 10 characters");
+                return;
+            }
+
+            if (username === password) {
+                alert("Username and password cannot be the same");
+                return;
+            }
+
+            let registeredUser = JSON.parse(localStorage.getItem("usersData"));
+
+            if (!registeredUser || registeredUser.length === 0) {
+                alert("No users registered. Please register first.");
+                return;
+            }
+
+            let foundUser = registeredUser.find(user => user.user === username);
+
+            if (!foundUser) {
+                alert("Username does not exist! Please register.");
+                return;
+            }
+
+            if (password !== foundUser.pass) {
+                alert("Password does not match");
+                return;
+            }
+
+            alert("Login successful");
+            form.reset();
+        });
+    </script>
+
+</body>
+
+</html>

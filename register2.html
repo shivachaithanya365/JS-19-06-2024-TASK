@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGISTER-PAGE 2</title>
+    <style>
+        form,
+        h1,
+        h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>REGISTER HERE</h1>
+
+    <form>
+        <input type="text" id="username" placeholder="username"> <br><br><br>
+        <input type="password" id="password" placeholder="password"> <br><br><br>
+        <input type="submit" id="submit" value="Register">
+    </form>
+
+    <h3>Already registered ? <a href="./login.html" target="_blank">Login here</a></h3>
+
+    <script>
+        let form = document.forms[0];
+
+        let submit = document.getElementById("submit");
+
+        let arr = [];
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            if (username == "" || username.length < 5 || username.length > 10) {
+                alert("Username length should be between 5 - 10 characters");
+                return;
+            };
+
+            if (username == password) {
+                alert("username and password shouldn't be same");
+                return;
+            };
+
+            if (arr.some(user => user.user === username)) {
+                alert("Username already exists");
+                return;
+            };
+
+            if (password == "" || password.length < 5 || password.length > 10) {
+                alert("password length should be between 5 - 10 characters");
+                return;
+            };
+
+            let obj = {
+                user: username,
+                pass: password
+            };
+
+            arr.push(obj);
+
+            localStorage.setItem("usersData", JSON.stringify(arr));
+
+            alert("Registered successfully")
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+
+            window.location.assign("./login2.html");
+        });
+
+    </script>
+</body>
+
+</html>
